@@ -10,6 +10,16 @@
     <p>Ceci est la page d'accueil de votre application.</p>
 
 
+
+    <h2>Filtrer les tâches</h2>
+    <form method="GET" action="/">
+        <button type="submit" name="filter" value="all">Toutes</button>
+        <button type="submit" name="filter" value="completed">Complètes</button>
+        <button type="submit" name="filter" value="incomplete">Non complètes</button>
+    </form>
+    
+
+
     <h2>Ajouter une Tache</h2>
     <form action="/" method="POST">
         <input type="text" name="task" placeholder="Entrez une nouvelle tache">
@@ -20,11 +30,15 @@
     <ul>
         {% for task in tasks %}
             <li>
-                {{ task }}
-                <form method="POST" action="/delete" style="display: inline;">
-                    <input type="hidden" name="task_delete" value="{{ task }}">
-                    <button type="submit">Supprimer</button>
-                </form>
+                {{ task.task }}
+                <a href="/complete/{{ task.id }}">
+                    {% if task.completed %} Réinitialiser {% else %} Compléter {% endif %}
+                </a>
+                
+                
+                <a href="/delete/{{ task.id }}">Supprimer</a>
+
+
             </li>
         {% endfor %}
     </ul>
